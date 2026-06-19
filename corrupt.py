@@ -531,76 +531,84 @@ if __name__ == "__main__":
 
 ###Typo investigation: how many typos does it take until the models notice?
     if (args.domain == "cell" or a) and args.typo:
-        ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
-        applied_cell_6 = cell.apply(lambda row: add_typo(row.proof, 1, 1, typo=args.sort_of_typo), axis='columns', result_type='expand')
-        new_cell_6 = pd.concat([cell, applied_cell_6], axis='columns')
-        applied_cell_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
-        applied_cell_7 = cell.apply(lambda row: add_typo(row.proof, 2, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_cell_7 = pd.concat([cell, applied_cell_7], axis='columns')
-        applied_cell_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
-        applied_cell_8 = cell.apply(lambda row: add_typo(row.proof, 3, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_cell_8 = pd.concat([cell, applied_cell_8], axis='columns')
-        applied_cell_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
-        applied_cell_9 = cell.apply(lambda row: add_typo(row.proof, 4, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_cell_9 = pd.concat([cell, applied_cell_9], axis='columns')
-        applied_cell_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
-        applied_cell_10 = cell.apply(lambda row: add_typo(row.proof, 5, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_cell_10 = pd.concat([cell, applied_cell_10], axis='columns')
-        applied_cell_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
+        for typ in ["rem_l", "dup_l", "ins_l", "scr_l"]: #cycle through entire list of options
+            ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
+            applied_cell_6 = cell.apply(lambda row: add_typo(row.proof, 1, 1, typo=typ), axis='columns', result_type='expand')
+            new_cell_6 = pd.concat([cell, applied_cell_6], axis='columns')
+            applied_cell_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
+            applied_cell_7 = cell.apply(lambda row: add_typo(row.proof, 2, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_cell_7 = pd.concat([cell, applied_cell_7], axis='columns')
+            applied_cell_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
+            applied_cell_8 = cell.apply(lambda row: add_typo(row.proof, 3, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_cell_8 = pd.concat([cell, applied_cell_8], axis='columns')
+            applied_cell_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
+            applied_cell_9 = cell.apply(lambda row: add_typo(row.proof, 4, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_cell_9 = pd.concat([cell, applied_cell_9], axis='columns')
+            applied_cell_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
+            applied_cell_10 = cell.apply(lambda row: add_typo(row.proof, 5, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_cell_10 = pd.concat([cell, applied_cell_10], axis='columns')
+            applied_cell_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
 
-        cell_t = pd.concat([applied_cell_6, applied_cell_7, applied_cell_8, applied_cell_9, applied_cell_10], axis='columns')
+            cell_mod = pd.concat([applied_cell_6, applied_cell_7, applied_cell_8, applied_cell_9, applied_cell_10], axis='columns')
 
-        if args.store_file:
-            ###saving to file
-            filename = "cell_modified_typos_" + args.sort_of_typo + ".jsonl"
-            with open(filename, "w") as f:
-                f.write(cell_t.to_json(orient='records',lines=True, force_ascii=False))
+            if args.store_file:
+                ###saving to file
+                with open("cell_modified_typos_" + typ + ".jsonl", "w") as f:
+                    f.write(cell_mod.to_json(orient='records',lines=True, force_ascii=False))
+
 
     if (args.domain == "food" or a) and args.typo:
-        ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
-        applied_food_6 = food.apply(lambda row: add_typo(row.proof, 1, 1, typo=args.sort_of_typo), axis='columns', result_type='expand')
-        new_food_6 = pd.concat([food, applied_food_6], axis='columns')
-        applied_food_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
-        applied_food_7 = food.apply(lambda row: add_typo(row.proof, 2, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_food_7 = pd.concat([food, applied_food_7], axis='columns')
-        applied_food_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
-        applied_food_8 = food.apply(lambda row: add_typo(row.proof, 3, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_food_8 = pd.concat([food, applied_food_8], axis='columns')
-        applied_food_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
-        applied_food_9 = food.apply(lambda row: add_typo(row.proof, 4, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_food_9 = pd.concat([food, applied_food_9], axis='columns')
-        applied_food_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
-        applied_food_10 = food.apply(lambda row: add_typo(row.proof, 5, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_food_10 = pd.concat([food, applied_food_10], axis='columns')
-        applied_food_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
+        for typ in ["rem_l", "dup_l", "ins_l", "scr_l"]: #cycle through entire list of options
+            ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
+            applied_food_6 = food.apply(lambda row: add_typo(row.proof, 1, 1, typo=typ), axis='columns', result_type='expand')
+            new_food_6 = pd.concat([food, applied_food_6], axis='columns')
+            applied_food_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
+            applied_food_7 = food.apply(lambda row: add_typo(row.proof, 2, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_food_7 = pd.concat([food, applied_food_7], axis='columns')
+            applied_food_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
+            applied_food_8 = food.apply(lambda row: add_typo(row.proof, 3, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_food_8 = pd.concat([food, applied_food_8], axis='columns')
+            applied_food_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
+            applied_food_9 = food.apply(lambda row: add_typo(row.proof, 4, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_food_9 = pd.concat([food, applied_food_9], axis='columns')
+            applied_food_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
+            applied_food_10 = food.apply(lambda row: add_typo(row.proof, 5, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_food_10 = pd.concat([food, applied_food_10], axis='columns')
+            applied_food_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
 
-        food_t = pd.concat([applied_food_6, applied_food_7, applied_food_8, applied_food_9, applied_food_10], axis='columns')
+            food_mod = pd.concat([applied_food_6, applied_food_7, applied_food_8, applied_food_9, applied_food_10], axis='columns')
 
-        if args.store_file:
-            ###saving to file
-            filename = "food_modified_typos_" + args.sort_of_typo + ".jsonl"
-            with open(filename, "w") as f:
-                f.write(food_t.to_json(orient='records',lines=True, force_ascii=False))
+            if args.store_file:
+                ###saving to file
+                with open("food_modified_typos_" + typ + ".jsonl", "w") as f:
+                    f.write(food_mod.to_json(orient='records',lines=True, force_ascii=False))
 
     if (args.domain == "drone" or a) and args.typo:
         ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
-        applied_drone_6 = drone.apply(lambda row: add_typo(row.proof, 1, 1, typo=args.sort_of_typo), axis='columns', result_type='expand')
-        new_drone_6 = pd.concat([drone, applied_drone_6], axis='columns')
-        applied_drone_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
-        applied_drone_7 = drone.apply(lambda row: add_typo(row.proof, 2, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_drone_7 = pd.concat([drone, applied_drone_7], axis='columns')
-        applied_drone_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
-        applied_drone_8 = drone.apply(lambda row: add_typo(row.proof, 3, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_drone_8 = pd.concat([drone, applied_drone_8], axis='columns')
-        applied_drone_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
-        applied_drone_9 = drone.apply(lambda row: add_typo(row.proof, 4, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_drone_9 = pd.concat([drone, applied_drone_9], axis='columns')
-        applied_drone_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
-        applied_drone_10 = drone.apply(lambda row: add_typo(row.proof, 5, 1, typo=args.sort_of_typo, cont=True), axis='columns', result_type='expand')
-        new_drone_10 = pd.concat([drone, applied_drone_10], axis='columns')
-        applied_drone_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
+        for typ in ["rem_l", "dup_l", "ins_l", "scr_l"]: #cycle through entire list of options
+            ###apply to dataframe and add results as new column: add n random typos in the conclusions of w steps 
+            applied_drone_6 = drone.apply(lambda row: add_typo(row.proof, 1, 1, typo=typ), axis='columns', result_type='expand')
+            new_drone_6 = pd.concat([drone, applied_drone_6], axis='columns')
+            applied_drone_6.rename(columns={'steps_typoed': 'steps_typoed_once'}, inplace=True)
+            applied_drone_7 = drone.apply(lambda row: add_typo(row.proof, 2, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_drone_7 = pd.concat([drone, applied_drone_7], axis='columns')
+            applied_drone_7.rename(columns={'steps_typoed': 'steps_typoed_twice'}, inplace=True)
+            applied_drone_8 = drone.apply(lambda row: add_typo(row.proof, 3, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_drone_8 = pd.concat([drone, applied_drone_8], axis='columns')
+            applied_drone_8.rename(columns={'steps_typoed': 'steps_typoed_thrice'}, inplace=True)
+            applied_drone_9 = drone.apply(lambda row: add_typo(row.proof, 4, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_drone_9 = pd.concat([drone, applied_drone_9], axis='columns')
+            applied_drone_9.rename(columns={'steps_typoed': 'steps_typoed_fourfold'}, inplace=True)
+            applied_drone_10 = drone.apply(lambda row: add_typo(row.proof, 5, 1, typo=typ, cont=True), axis='columns', result_type='expand')
+            new_drone_10 = pd.concat([drone, applied_drone_10], axis='columns')
+            applied_drone_10.rename(columns={'steps_typoed': 'steps_typoed_fivefold'}, inplace=True)
 
-        drone_t = pd.concat([applied_drone_6, applied_drone_7, applied_drone_8, applied_drone_9, applied_drone_10], axis='columns')
+            drone_mod = pd.concat([applied_drone_6, applied_drone_7, applied_drone_8, applied_drone_9, applied_drone_10], axis='columns')
+
+            if args.store_file:
+                ###saving to file
+                with open("drone_modified_typos_" + typ + ".jsonl", "w") as f:
+                    f.write(drone_mod.to_json(orient='records',lines=True, force_ascii=False))
 
         if args.store_file:
             ###saving to file
