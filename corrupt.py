@@ -609,9 +609,3 @@ if __name__ == "__main__":
                 ###saving to file
                 with open("drone_modified_typos_" + typ + ".jsonl", "w") as f:
                     f.write(drone_mod.to_json(orient='records',lines=True, force_ascii=False))
-
-        if args.store_file:
-            ###saving to file
-            filename = "drone_modified_typos_" + args.sort_of_typo + ".jsonl"
-            with open(filename, "w") as f:
-                f.write(drone_t.to_json(orient='records',lines=True, force_ascii=False))
