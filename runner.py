@@ -88,8 +88,8 @@ def clean_model_response(data:str):
             if len(dict_object.keys()) == 1: #updated to deal with json that includes {step:{conclusion...}}
                 key = [e for e in dict_object.keys()][0]
                 dict_object = dict_object[key]
-            if isinstance(dict_object, list): #trying to fix extraction fail where cleaned response is list of list(s)
-                dict_object = dict_object[0]
+        if isinstance(dict_object, list): #trying to fix extraction fail where cleaned response is list of list(s)
+            dict_object = dict_object[0]
         return {"cleaned_response": [dict_object]}
     else:
         return None
