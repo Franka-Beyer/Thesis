@@ -274,6 +274,7 @@ if __name__ == "__main__":
         
         full_save_path = os.path.join(args.output_dir, filename)
         if os.path.exists(full_save_path):
+            run_ind += 1
             print(f"Skipping existing file: {full_save_path}")
             continue
         print(f"Launching evaluation iteration writing to: {full_save_path}")
