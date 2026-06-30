@@ -393,7 +393,7 @@ if __name__ == "__main__":
         a = True
 
     b = False
-    if args.domain == "full":
+    if args.corruption == "full":
         b = True
 
     if args.domain == "cell" or a:
